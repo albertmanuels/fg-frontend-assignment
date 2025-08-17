@@ -11,7 +11,7 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import type { DataTableProps } from './Table.types';
 import { Input } from '../ui/input';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import Filter from './components/Filter';
 import Pagination from './components/Pagination';
 import { Button } from '../ui/button';
@@ -25,8 +25,9 @@ const DataTable = <TData, TValue>({
   error = null,
   search = {
     placeholder: 'Search by email...',
-    targetColumn: 'email' as const,
+    targetColumn: 'email' as keyof TData,
   },
+  filterOptions = [],
 }: DataTableProps<TData, TValue>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -49,25 +50,36 @@ const DataTable = <TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
 
-  const cityOptions = useMemo(() => generateUniqueOptions(data, 'city' as keyof TData), [data]);
-  const companyOptions = useMemo(() => generateUniqueOptions(data, 'company' as keyof TData), [data]);
-
   const renderSearchbar = () => {
+    return (
+      <Input
+        className="w-full sm:max-w-sm"
+        placeholder={search.placeholder}
+        value={(table.getColumn(String(search.targetColumn))?.getFilterValue() as string) ?? ''}
+        onChange={(e) => table.getColumn(String(search.targetColumn))?.setFilterValue(e.target.value)}
+      />
+    );
+  };
+
+  const renderFilter = () => {
     const isFiltered = table.getState().columnFilters.length > 0;
 
     return (
-      <div className="flex items-center py-4 gap-2">
-        <Input
-          className="max-w-sm"
-          placeholder={search.placeholder}
-          value={(table.getColumn(String(search.targetColumn))?.getFilterValue() as string) ?? ''}
-          onChange={(e) => table.getColumn(String(search.targetColumn))?.setFilterValue(e.target.value)}
-        />
-        {table.getColumn('city') && <Filter column={table.getColumn('city')} title="City" options={cityOptions} />}
-
-        {table.getColumn('company') && (
-          <Filter column={table.getColumn('company')} title="Company" options={companyOptions} />
-        )}
+      <div className="flex items-center gap-2 flex-wrap">
+        {filterOptions.length > 0 &&
+          filterOptions.map((filter) => {
+            if (table.getColumn(filter.columnKey as string)) {
+              return (
+                <Filter
+                  key={filter.columnKey as string}
+                  column={table.getColumn(filter.columnKey as string)}
+                  title={filter.label}
+                  options={generateUniqueOptions(data, filter.columnKey as keyof TData)}
+                />
+              );
+            }
+            return null;
+          })}
 
         {isFiltered && (
           <Button variant="ghost" size="sm" onClick={() => table.resetColumnFilters()}>
@@ -124,7 +136,10 @@ const DataTable = <TData, TValue>({
 
   return (
     <div>
-      {renderSearchbar()}
+      <div className="flex flex-col sm:flex-row sm:items-center py-4 gap-2">
+        {renderSearchbar()}
+        {renderFilter()}
+      </div>
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader className="bg-gray-300">

@@ -9,5 +9,8 @@ export interface DataTableProps<TData, TValue> {
     placeholder: string; 
     targetColumn: keyof TData | string;
   };
-  filterOptions?: Array<keyof TData>
+  filterOptions?: Array<{
+    label: string;
+    columnKey: string;
+  }>
 }

@@ -1,4 +1,4 @@
-import type { Row } from '@tanstack/react-table';
+import { createColumnHelper, type Row } from '@tanstack/react-table';
 
 export const filterWithLowerCase = <TData>(
   row: Row<TData>,
@@ -35,3 +35,14 @@ export const generateUniqueOptions = <TData>(
     value: formatValue ? formatValue(value) : value.toLowerCase(),
   }));
 };
+
+const columnHelper = createColumnHelper()
+
+export const columnIndex =  columnHelper.display({
+    id: "rowNumber",
+    header: () => "#",
+    cell: ({ row }) => row.index + 1,
+    enableSorting: false,
+    enableColumnFilter: false,
+    minSize: 60
+})
