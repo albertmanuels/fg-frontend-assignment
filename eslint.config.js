@@ -79,7 +79,7 @@ export default tseslint.config(
       ],
 
       // IMPORT
-      'import/newline-after-import': [ERROR, { count: 2 }],
+      'import/newline-after-import': [ERROR, { count: 1 }],
       'unused-imports/no-unused-imports': ERROR, // Consistent type imports
       '@typescript-eslint/consistent-type-imports': [
         ERROR,

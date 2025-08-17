@@ -1,6 +1,8 @@
 import {
   flexRender,
   getCoreRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
   getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
@@ -8,9 +10,13 @@ import {
 } from '@tanstack/react-table';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import type { DataTableProps } from './Table.types';
-import Pagination from './components/Pagination';
 import { Input } from '../ui/input';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import Filter from './components/Filter';
+import Pagination from './components/Pagination';
+import { Button } from '../ui/button';
+import { X } from 'lucide-react';
+import { generateUniqueOptions } from './Table.utils';
 
 const DataTable = <TData, TValue>({
   data,
@@ -19,7 +25,7 @@ const DataTable = <TData, TValue>({
   error = null,
   search = {
     placeholder: 'Search by email...',
-    targetColumn: 'email',
+    targetColumn: 'email' as const,
   },
 }: DataTableProps<TData, TValue>) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -27,24 +33,42 @@ const DataTable = <TData, TValue>({
   const table = useReactTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnFiltersChange: setColumnFilters,
     state: {
       columnFilters,
     },
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
   });
 
+  const cityOptions = useMemo(() => generateUniqueOptions(data, 'city' as keyof TData), [data]);
+  const companyOptions = useMemo(() => generateUniqueOptions(data, 'company' as keyof TData), [data]);
+
   const renderSearchbar = () => {
+    const isFiltered = table.getState().columnFilters.length > 0;
+
     return (
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-4 gap-2">
         <Input
           className="max-w-sm"
           placeholder={search.placeholder}
-          value={(table.getColumn(search.targetColumn)?.getFilterValue() as string) ?? ''}
-          onChange={(e) => table.getColumn(search.targetColumn)?.setFilterValue(e.target.value)}
+          value={(table.getColumn(String(search.targetColumn))?.getFilterValue() as string) ?? ''}
+          onChange={(e) => table.getColumn(String(search.targetColumn))?.setFilterValue(e.target.value)}
         />
+        {table.getColumn('city') && <Filter column={table.getColumn('city')} title="City" options={cityOptions} />}
+
+        {table.getColumn('company') && (
+          <Filter column={table.getColumn('company')} title="Company" options={companyOptions} />
+        )}
+
+        {isFiltered && (
+          <Button variant="ghost" size="sm" onClick={() => table.resetColumnFilters()}>
+            Reset <X />
+          </Button>
+        )}
       </div>
     );
   };
@@ -74,7 +98,7 @@ const DataTable = <TData, TValue>({
       ));
     }
 
-    if (table.getRowModel().rows.length > 0) {
+    if (table.getRowModel().rows.length) {
       return table.getRowModel().rows.map((row) => (
         <TableRow key={row.id}>
           {row.getVisibleCells().map((cell) => (
@@ -96,6 +120,7 @@ const DataTable = <TData, TValue>({
   return (
     <div>
       {renderSearchbar()}
+
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader className="bg-gray-300">
