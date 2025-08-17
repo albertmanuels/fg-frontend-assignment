@@ -1,9 +1,7 @@
-import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Check, PlusCircle } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
+
 import { Badge } from '@/components/ui/badge';
-import type { FilterProps } from './Filter.types';
+import { Button } from '@/components/ui/button';
 import {
   Command,
   CommandEmpty,
@@ -13,7 +11,12 @@ import {
   CommandList,
   CommandSeparator,
 } from '@/components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
+
+import type { FilterProps } from './Filter.types';
+
 
 const Filter = <TData, TValue>(props: FilterProps<TData, TValue>) => {
   const { title, column, options, isDisabled } = props;

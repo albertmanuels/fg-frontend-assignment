@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import {
   flexRender,
   getCoreRowModel,
@@ -8,15 +10,17 @@ import {
   useReactTable,
   type ColumnFiltersState,
 } from '@tanstack/react-table';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
-import type { DataTableProps } from './Table.types';
+import { X } from 'lucide-react';
+
 import { Input } from '../ui/input';
-import { useState } from 'react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import Filter from './components/Filter';
 import Pagination from './components/Pagination';
-import { Button } from '../ui/button';
-import { X } from 'lucide-react';
 import { generateUniqueOptions } from './Table.utils';
+import { Button } from '../ui/button';
+
+
+import type { DataTableProps } from './Table.types';
 
 const DataTable = <TData, TValue>({
   data,

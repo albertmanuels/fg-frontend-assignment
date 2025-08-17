@@ -1,4 +1,5 @@
 import DataTable from '@/components/Table/Table';
+
 import { columns } from './UserTable.constants';
 import useUserTable from './UserTable.hook';
 

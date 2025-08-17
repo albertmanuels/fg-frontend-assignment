@@ -1,6 +1,8 @@
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+
 import type { DataTablePaginationProps } from './Pagination.types';
 
 function Pagination<TData>({ table }: DataTablePaginationProps<TData>) {
