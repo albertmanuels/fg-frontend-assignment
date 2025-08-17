@@ -36,6 +36,11 @@ const DataTable = <TData, TValue>({
     state: {
       columnFilters,
     },
+    initialState: {
+      pagination: {
+        pageSize: 5,
+      },
+    },
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -120,7 +125,6 @@ const DataTable = <TData, TValue>({
   return (
     <div>
       {renderSearchbar()}
-
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader className="bg-gray-300">
