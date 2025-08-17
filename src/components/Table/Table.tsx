@@ -1,15 +1,4 @@
-import { useState } from 'react';
-
-import {
-  flexRender,
-  getCoreRowModel,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  useReactTable,
-  type ColumnFiltersState,
-} from '@tanstack/react-table';
+import { flexRender } from '@tanstack/react-table';
 import { X } from 'lucide-react';
 
 import { Input } from '../ui/input';
@@ -19,40 +8,22 @@ import Pagination from './components/Pagination';
 import { generateUniqueOptions } from './Table.utils';
 import { Button } from '../ui/button';
 
-
 import type { DataTableProps } from './Table.types';
+import useTable from './Table.hook';
 
-const DataTable = <TData, TValue>({
-  data,
-  columns,
-  isLoading = false,
-  error = null,
-  search = {
-    placeholder: 'Search by email...',
-    targetColumn: 'email' as keyof TData,
-  },
-  filterOptions = [],
-}: DataTableProps<TData, TValue>) => {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-
-  const table = useReactTable({
+const DataTable = <TData, TValue>(props: DataTableProps<TData, TValue>) => {
+  const {
     data,
     columns,
-    state: {
-      columnFilters,
+    isLoading = false,
+    error = null,
+    search = {
+      placeholder: 'Search by email...',
+      targetColumn: 'email' as keyof TData,
     },
-    initialState: {
-      pagination: {
-        pageSize: 5,
-      },
-    },
-    onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-  });
+    filterOptions = [],
+  } = props;
+  const { table } = useTable<TData, TValue>(props);
 
   const renderSearchbar = () => {
     return (
