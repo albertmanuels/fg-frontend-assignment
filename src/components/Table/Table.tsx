@@ -57,6 +57,7 @@ const DataTable = <TData, TValue>({
         placeholder={search.placeholder}
         value={(table.getColumn(String(search.targetColumn))?.getFilterValue() as string) ?? ''}
         onChange={(e) => table.getColumn(String(search.targetColumn))?.setFilterValue(e.target.value)}
+        disabled={isLoading}
       />
     );
   };
@@ -75,6 +76,7 @@ const DataTable = <TData, TValue>({
                   column={table.getColumn(filter.columnKey as string)}
                   title={filter.label}
                   options={generateUniqueOptions(data, filter.columnKey as keyof TData)}
+                  isDisabled={isLoading}
                 />
               );
             }

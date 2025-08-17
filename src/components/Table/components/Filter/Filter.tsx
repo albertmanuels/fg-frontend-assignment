@@ -16,13 +16,13 @@ import {
 import { cn } from '@/lib/utils';
 
 const Filter = <TData, TValue>(props: FilterProps<TData, TValue>) => {
-  const { title, column, options } = props;
+  const { title, column, options, isDisabled } = props;
   const facets = column?.getFacetedUniqueValues();
   const selectedValues = new Set(column?.getFilterValue() as string[]);
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild disabled={isDisabled}>
         <Button variant="outline" size="sm" className="h-8  bg-black text-white">
           <PlusCircle />
           {title}

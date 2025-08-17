@@ -10,4 +10,5 @@ export interface FilterProps<TData, TValue> {
     value: string;
     icon?: ComponentType<{ className?: string }>;
   }[];
+  isDisabled?: boolean;
 }
