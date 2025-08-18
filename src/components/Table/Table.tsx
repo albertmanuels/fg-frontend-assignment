@@ -18,8 +18,8 @@ const DataTable = <TData, TValue>(props: DataTableProps<TData, TValue>) => {
     isLoading = false,
     error = null,
     search = {
-      placeholder: 'Search by email...',
-      targetColumn: 'email' as keyof TData,
+      placeholder: 'Search by name...',
+      targetColumn: 'name' as keyof TData,
     },
     filterOptions = [],
   } = props;

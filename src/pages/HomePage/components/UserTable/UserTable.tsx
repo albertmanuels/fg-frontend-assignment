@@ -13,8 +13,8 @@ const UserTable = () => {
       isLoading={isLoading}
       error={error?.message}
       search={{
-        placeholder: 'Search by email...',
-        targetColumn: 'email',
+        placeholder: 'Search by name...',
+        targetColumn: 'name',
       }}
       filterOptions={[
         {
