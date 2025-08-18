@@ -9,7 +9,7 @@ function Pagination<TData>({ table }: DataTablePaginationProps<TData>) {
   return (
     <div className="flex items-center justify-between space-x-6 lg:space-x-8 py-4">
       <div className="flex items-center space-x-2">
-        <p className="text-sm font-medium !mb-0">Rows per page</p>
+        <p className="text-sm font-medium !mb-0 hidden sm:block">Rows per page</p>
         <Select
           value={`${table.getState().pagination.pageSize}`}
           onValueChange={(value) => {
