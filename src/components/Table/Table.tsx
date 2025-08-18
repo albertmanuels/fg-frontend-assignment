@@ -5,11 +5,11 @@ import { Input } from '../ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import Filter from './components/Filter';
 import Pagination from './components/Pagination';
+import useTable from './Table.hook';
 import { generateUniqueOptions } from './Table.utils';
 import { Button } from '../ui/button';
 
 import type { DataTableProps } from './Table.types';
-import useTable from './Table.hook';
 
 const DataTable = <TData, TValue>(props: DataTableProps<TData, TValue>) => {
   const {
