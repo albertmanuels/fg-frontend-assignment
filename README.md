@@ -1,69 +1,118 @@
-# React + TypeScript + Vite
+# Finology Frontend Assignment - User Management Table App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive user management application built with React and TypeScript. This app displays user data in an interactive table with advanced filtering, searching, and pagination capabilities.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+https://finology-frontend-assignment.vercel.app/
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **📊 Interactive Data Table**: Built with TanStack Table for powerful data manipulation
+- **🔍 Advanced Search**: Real-time search functionality across user data
+- **🎯 Multi-Filter Support**: Filter by city, company, and other attributes with faceted counts
+- **📱 Responsive Design**: Optimized for desktop, tablet, and mobile devices
+- **⚡ Fast Performance**: Optimized with React Query for efficient data fetching and caching
+- **🎨 Modern UI**: Clean interface using Tailwind CSS and shadcn/ui components
+- **🔧 Developer Experience**: ESLint + Prettier for code quality and consistency
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠 Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### Frontend
+- **[React 19](https://react.dev/)** - UI library
+- **[Vite](https://vitejs.dev/)** - Build tool and dev server
+- **[TypeScript](https://www.typescriptlang.org/)** - Type safety and developer experience
+- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
+- **[shadcn/ui](https://ui.shadcn.com/)** - Re-usable component library
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Data Management
+- **[TanStack Table](https://tanstack.com/table)** - Headless table library for filtering, sorting, and pagination
+- **[TanStack React Query](https://tanstack.com/query)** - Server state management and data fetching
+
+### Code Quality
+- **[ESLint](https://eslint.org/)** - Code linting and error detection
+- **[Prettier](https://prettier.io/)** - Code formatting
+- **Custom ESLint Config** - Enforces import ordering, unused imports cleanup, and code standards
+
+### API
+- **[JSONPlaceholder](https://jsonplaceholder.typicode.com/)** - Fake REST API for testing and prototyping
+
+## 📋 Prerequisites
+
+Before running this application, make sure you have the following installed:
+
+- **Node.js** (version 18.0 or higher)
+- **npm** (version 8.0 or higher) or **yarn**
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/albertmanuels/fg-frontend-assignment.git
+cd fg-frontend-assignment
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Install dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+# or
+yarn install
 ```
+
+### 3. Environment Setup
+
+Create a `.env` file in the root directory:
+
+```env
+VITE_API_URL=https://jsonplaceholder.typicode.com
+```
+
+### 4. Start the development server
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+The application will be available at `http://localhost:5173`
+
+## 📜 Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build |
+| `npm run lint` | Run ESLint for code analysis |
+| `npm run lint:fix` | Fix ESLint errors automatically |
+| `npm run format` | Format code with Prettier |
+| `npm run format:check` | Check code formatting |
+
+## 🏗 Project Structure
+
+```
+src/
+├── components/          # Reusable UI components
+│   ├── Footer/         # Footer component
+│   ├── Header/         # Header component
+│   ├── Table/          # Data table components
+│   │   ├── components/ # Table sub-components (Filter, Pagination)
+│   │   ├── Table.tsx   # Main table component
+│   │   ├── Table.types.ts
+│   │   └── Table.utils.ts
+│   └── ui/            # shadcn/ui components
+├── config/            # Configuration files
+│   └── environment.ts # Environment variables
+├── lib/              # Utility functions
+│   └── utils.ts      # Common utilities
+├── pages/            # Page components
+│   └── HomePage/     # Home page with user table
+├── services/         # API services and hooks
+    └── hooks/        # Custom React hooks
+```
+---
+
+Built with ☕️ by Albert using React, TypeScript, and modern web technologies.
