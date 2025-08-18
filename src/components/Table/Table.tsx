@@ -1,6 +1,8 @@
 import { flexRender } from '@tanstack/react-table';
 import { X } from 'lucide-react';
 
+import { cn } from '@/lib/utils';
+
 import { Input } from '../ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import Filter from './components/Filter';
@@ -10,7 +12,6 @@ import { generateUniqueOptions } from './Table.utils';
 import { Button } from '../ui/button';
 
 import type { DataTableProps } from './Table.types';
-import { cn } from '@/lib/utils';
 
 const DataTable = <TData, TValue>(props: DataTableProps<TData, TValue>) => {
   const {
