@@ -46,6 +46,8 @@ const Filter = <TData, TValue>(props: FilterProps<TData, TValue>) => {
                 .sort((a, b) => a.label.localeCompare(b.label))
                 .map((option) => {
                   const isSelected = selectedValues.has(option.value);
+                  const count = facets?.get(option.value) || facets?.get(option.label) || 0;
+
                   return (
                     <CommandItem
                       key={option.value}
@@ -72,11 +74,7 @@ const Filter = <TData, TValue>(props: FilterProps<TData, TValue>) => {
                       </div>
                       {option.icon && <option.icon className="text-muted-foreground size-4" />}
                       <span>{option.label}</span>
-                      {facets?.get(option.value) && (
-                        <span className="text-black ml-auto flex size-4 items-center justify-center font-mono text-xs">
-                          {facets?.get(option.value)}
-                        </span>
-                      )}
+                      <span className="ml-auto flex size-4 items-center justify-center">{count > 0 ? count : ''}</span>
                     </CommandItem>
                   );
                 })}
