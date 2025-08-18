@@ -13,8 +13,23 @@ import {
 import type { DataTableProps } from './Table.types';
 
 const useTable = <TData, TValue>(props: DataTableProps<TData, TValue>) => {
-  const { data, columns } = props;
+  const { data, columns, maxHeight = "md" } = props;
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
+  const getMaxHeightClass = () => {
+    switch (maxHeight) {
+      case 'sm':
+        return 'max-h-48';
+      case 'md':
+        return 'max-h-72';
+      case 'lg':
+        return 'max-h-96';
+      case 'xl':
+        return 'max-h-screen';
+      default:
+        return 'max-h-72';
+    }
+  };
 
   const table = useReactTable({
     data,
@@ -36,7 +51,8 @@ const useTable = <TData, TValue>(props: DataTableProps<TData, TValue>) => {
   });
 
   return {
-    table
+    table,
+    getMaxHeightClass
   }
 }
 

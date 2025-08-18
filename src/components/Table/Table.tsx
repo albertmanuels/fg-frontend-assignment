@@ -26,7 +26,7 @@ const DataTable = <TData, TValue>(props: DataTableProps<TData, TValue>) => {
     className,
     withBorderBody = false,
   } = props;
-  const { table } = useTable<TData, TValue>(props);
+  const { table, getMaxHeightClass } = useTable<TData, TValue>(props);
 
   const renderSearchbar = () => {
     return (
@@ -120,9 +120,9 @@ const DataTable = <TData, TValue>(props: DataTableProps<TData, TValue>) => {
         {renderSearchbar()}
         {renderFilter()}
       </div>
-      <div className="overflow-hidden rounded-md border">
-        <Table className={cn(className, { 'table-bordered': withBorderBody })}>
-          <TableHeader className="bg-gray-300">
+      <div className={cn('overflow-auto rounded-md border relative w-full', getMaxHeightClass())}>
+        <Table className={cn({ 'table-bordered': withBorderBody }, className)}>
+          <TableHeader className="bg-gray-300 sticky top-0">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (

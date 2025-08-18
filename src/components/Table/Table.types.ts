@@ -1,6 +1,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import type { ClassNameValue } from "tailwind-merge";
 
+type MaxHeight = 'sm' | 'md' | 'lg' | 'xl';
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -15,5 +16,6 @@ export interface DataTableProps<TData, TValue> {
     columnKey: string;
   }>
   withBorderBody?: boolean;
-  className?: ClassNameValue
+  className?: ClassNameValue;
+  maxHeight?: MaxHeight;
 }
