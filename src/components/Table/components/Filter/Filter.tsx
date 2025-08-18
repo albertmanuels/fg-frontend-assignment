@@ -17,7 +17,6 @@ import { cn } from '@/lib/utils';
 
 import type { FilterProps } from './Filter.types';
 
-
 const Filter = <TData, TValue>(props: FilterProps<TData, TValue>) => {
   const { title, column, options, isDisabled } = props;
   const facets = column?.getFacetedUniqueValues();
@@ -43,42 +42,44 @@ const Filter = <TData, TValue>(props: FilterProps<TData, TValue>) => {
           <CommandList>
             <CommandEmpty>No options found.</CommandEmpty>
             <CommandGroup>
-              {options.map((option) => {
-                const isSelected = selectedValues.has(option.value);
-                return (
-                  <CommandItem
-                    key={option.value}
-                    onSelect={() => {
-                      if (isSelected) {
-                        selectedValues.delete(option.value);
-                      } else {
-                        selectedValues.add(option.value);
-                      }
+              {options
+                .sort((a, b) => a.label.localeCompare(b.label))
+                .map((option) => {
+                  const isSelected = selectedValues.has(option.value);
+                  return (
+                    <CommandItem
+                      key={option.value}
+                      onSelect={() => {
+                        if (isSelected) {
+                          selectedValues.delete(option.value);
+                        } else {
+                          selectedValues.add(option.value);
+                        }
 
-                      const filterValues = Array.from(selectedValues);
-                      column?.setFilterValue(filterValues.length ? filterValues : undefined);
-                    }}
-                  >
-                    <div
-                      className={cn(
-                        'flex size-4 items-center justify-center rounded-[4px] border',
-                        isSelected
-                          ? 'bg-primary border-primary text-primary-foreground'
-                          : 'border-input [&_svg]:invisible'
-                      )}
+                        const filterValues = Array.from(selectedValues);
+                        column?.setFilterValue(filterValues.length ? filterValues : undefined);
+                      }}
                     >
-                      <Check className="text-primary-foreground size-3.5" />
-                    </div>
-                    {option.icon && <option.icon className="text-muted-foreground size-4" />}
-                    <span>{option.label}</span>
-                    {facets?.get(option.value) && (
-                      <span className="text-black ml-auto flex size-4 items-center justify-center font-mono text-xs">
-                        {facets?.get(option.value)}
-                      </span>
-                    )}
-                  </CommandItem>
-                );
-              })}
+                      <div
+                        className={cn(
+                          'flex size-4 items-center justify-center rounded-[4px] border',
+                          isSelected
+                            ? 'bg-primary border-primary text-primary-foreground'
+                            : 'border-input [&_svg]:invisible'
+                        )}
+                      >
+                        <Check className="text-primary-foreground size-3.5" />
+                      </div>
+                      {option.icon && <option.icon className="text-muted-foreground size-4" />}
+                      <span>{option.label}</span>
+                      {facets?.get(option.value) && (
+                        <span className="text-black ml-auto flex size-4 items-center justify-center font-mono text-xs">
+                          {facets?.get(option.value)}
+                        </span>
+                      )}
+                    </CommandItem>
+                  );
+                })}
             </CommandGroup>
             {selectedValues.size > 0 && (
               <>
