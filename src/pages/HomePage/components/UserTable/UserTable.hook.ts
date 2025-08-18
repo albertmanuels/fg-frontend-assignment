@@ -1,7 +1,7 @@
 import useGetAllUsers from "@/services/hooks/useGetAllUsers";
 
 const useUserTable = () => {
-  const { data: fetchedData, isLoading } = useGetAllUsers();
+  const { data: fetchedData, isLoading, isError, error } = useGetAllUsers();
   const data =
     (fetchedData &&
       fetchedData.map((user) => ({
@@ -18,7 +18,9 @@ const useUserTable = () => {
 
   return {
     data,
-    isLoading
+    isLoading,
+    isError,
+    error
   }
 }
 
