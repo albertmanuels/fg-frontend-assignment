@@ -72,3 +72,13 @@ p {
   margin-bottom: 1rem;
   line-height: 1.6;
 }
+
+.table-bordered tbody th,
+.table-bordered tbody td {
+  border-right: 1px solid gray;
+}
+
+.table-bordered tbody th:last-child,
+.table-bordered tbody td:last-child {
+  border-right: none;
+}

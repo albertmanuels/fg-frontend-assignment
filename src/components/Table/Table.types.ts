@@ -1,4 +1,5 @@
 import type { ColumnDef } from "@tanstack/react-table";
+import type { ClassNameValue } from "tailwind-merge";
 
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -13,4 +14,6 @@ export interface DataTableProps<TData, TValue> {
     label: string;
     columnKey: string;
   }>
+  withBorderBody?: boolean;
+  className?: ClassNameValue
 }

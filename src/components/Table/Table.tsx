@@ -10,6 +10,7 @@ import { generateUniqueOptions } from './Table.utils';
 import { Button } from '../ui/button';
 
 import type { DataTableProps } from './Table.types';
+import { cn } from '@/lib/utils';
 
 const DataTable = <TData, TValue>(props: DataTableProps<TData, TValue>) => {
   const {
@@ -22,6 +23,8 @@ const DataTable = <TData, TValue>(props: DataTableProps<TData, TValue>) => {
       targetColumn: 'name' as keyof TData,
     },
     filterOptions = [],
+    className,
+    withBorderBody = false,
   } = props;
   const { table } = useTable<TData, TValue>(props);
 
@@ -118,12 +121,12 @@ const DataTable = <TData, TValue>(props: DataTableProps<TData, TValue>) => {
         {renderFilter()}
       </div>
       <div className="overflow-hidden rounded-md border">
-        <Table>
+        <Table className={cn(className, { 'table-bordered': withBorderBody })}>
           <TableHeader className="bg-gray-300">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="font-bold">
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   </TableHead>
                 ))}
